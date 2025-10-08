@@ -1,0 +1,197 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+    <style>
+        /* Register Container */
+        .register-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin:15rem;
+            max-width: 900px; /* Slightly wider to accommodate two columns */
+            margin: 0 auto;
+        }
+
+            /* Form Header */
+            .register-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .register-container h2 {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 2rem;
+        }
+
+        /* Form Group with Icons */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(30%);
+                color: #664;
+                font-size: 1.2rem;
+            }
+
+            .form-group .form-control {
+                padding-left: 2.5rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                height: 50px; /* Consistent height */
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .form-group .form-control:focus {
+                    border-color: #005B41;
+                    box-shadow: 0 0 8px rgba(0, 91, 65, 0.2);
+                    outline: none;
+                }
+
+            .form-group label {
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 0.5rem;
+                position: static; /* Override form-floating */
+            }
+
+            .form-group .text-danger {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+            }
+
+        /* External Login Section */
+        .external-login h3 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .external-login .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+            .external-login .btn i {
+                font-size: 1.2rem;
+            }
+
+        /* Form Actions */
+        .form-actions {
+            grid-column: 1 / -1; /* Full width */
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+            .form-actions .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+                width: 100%;
+            }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+        
+    </style>
+
+
+<div class="register-container">
+    <h1>@ViewData["Title"]</h1>
+    <div class="form-grid">
+        <div>
+            <h2>Create a New Account</h2>
+            <hr />
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email">Email</label>
+                    <i class="fas fa-envelope"></i>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">Password</label>
+                    <i class="fas fa-lock"></i>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Enter password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                    <i class="fas fa-lock"></i>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Confirm password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-actions">
+                    <button id="registerSubmit" type="submit" class="btn btn-primary"><i class="fas fa-user-plus me-2"></i>Register</button>
+                </div>
+            </form>
+        </div>
+        <div class="external-login">
+            <h3>Gift of the Givers Foundation</h3>
+            <hr />
+            <p>Create an account and join us on our mission to help millions of people from all over the globe. We are in this together
+                no matter the disaster.
+            </p>
+            <img src="https://i.pinimg.com/736x/0d/a9/bb/0da9bb4d70dfb88389b556cdc6fe5791.jpg" width="350" style="display:flex;justify-content:center;align-items:center" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            // Hover effect for buttons
+            $('.form-actions .btn, .external-login .btn').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

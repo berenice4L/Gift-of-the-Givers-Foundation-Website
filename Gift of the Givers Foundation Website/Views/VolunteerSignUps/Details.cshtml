@@ -1,0 +1,138 @@
+﻿@model Gift_of_the_Givers_Foundation_Website.Models.VolunteerSignUp
+
+@{
+    ViewData["Title"] = "Volunteer Sign-Up Details";
+}
+
+
+    <style>
+        /* Details Container */
+        .details-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+            /* Header */
+            .details-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .details-container h4 {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+        /* Details List */
+        .details-list {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Label:Value ratio */
+            gap: 1rem;
+            align-items: start;
+        }
+
+            .details-list dt {
+                font-weight: 500;
+                color: #333;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .details-list dd {
+                color: #666;
+                margin-bottom: 1rem;
+            }
+
+            .details-list i {
+                color: #005B41;
+                font-size: 1.2rem;
+            }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+            .action-buttons a {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+                text-decoration: none;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+                .action-buttons a:hover {
+                    transform: translateY(-2px);
+                }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+            color: #fff;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+        
+    </style>
+
+
+<div class="details-container">
+    <h1>Volunteer Sign-Up Details</h1>
+    <h4>@Model.Project.Title</h4>
+    <hr />
+    <div class="details-list">
+        <dt><i class="fas fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.SignUpDate)</dt>
+        <dd>@Html.DisplayFor(model => model.SignUpDate)</dd>
+
+        <dt><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.User)</dt>
+        <dd>@Html.DisplayFor(model => model.User.Email)</dd>
+
+        <dt><i class="fas fa-project-diagram"></i> @Html.DisplayNameFor(model => model.Project)</dt>
+        <dd>@Html.DisplayFor(model => model.Project.Title)</dd>
+    </div>
+
+    <div class="action-buttons">
+        <a asp-action="Edit" asp-route-id="@Model?.SignUpID" class="btn btn-primary"><i class="fas fa-edit me-2"></i>Edit</a>
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-list me-2"></i>Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Hover effect for buttons
+            $('.action-buttons a').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

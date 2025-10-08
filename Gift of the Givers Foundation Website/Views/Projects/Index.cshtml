@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Gift_of_the_Givers_Foundation_Website.Models.Project>
+
+@{
+    ViewData["Title"] = "Projects Dashboard";
+}
+
+
+<style>
+    /* Dashboard Styles */
+    .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    margin:20px;
+    }
+
+    .dashboard-header h1 {
+    font-size: 2rem;
+    color: #005B41;
+    }
+
+    .search-bar {
+    max-width: 300px;
+    position: relative;
+    }
+
+    .search-bar input {
+    padding-left: 2.5rem;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    }
+
+    .search-bar i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #663;
+    }
+
+    .project-card {
+    background: #E5E4E2;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 1.5rem;
+    margin-left:20px;
+    }
+
+    .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .project-card .card-body {
+    padding: 1.5rem;
+    }
+
+    .project-card .card-title {
+    font-size: 1.25rem;
+    color: #005B41;
+    margin-bottom: 0.5rem;
+    }
+
+    .project-card .card-text {
+    font-size: 0.9rem;
+    color: #666;
+    }
+
+    .project-card .btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    }
+
+
+</style>
+
+
+<div class="dashboard-header">
+    <h1>Projects Dashboard</h1>
+    <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="projectSearch" class="form-control" placeholder="Search projects...">
+    </div>
+</div>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus me-2"></i>Create New Project</a>
+</div>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-sm-6 mb-4">
+            <div class="project-card">
+                <div class="card-body">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                    <p class="card-text"><strong>Description:</strong> @Html.DisplayFor(modelItem => item.Description)</p>
+                    <p class="card-text"><strong>Location:</strong> @Html.DisplayFor(modelItem => item.Location)</p>
+                    <p class="card-text"><strong>Start Date:</strong> @Html.DisplayFor(modelItem => item.StartDate)</p>
+                    <p class="card-text"><strong>End Date:</strong> @Html.DisplayFor(modelItem => item.EndDate)</p>
+                    <p class="card-text"><strong>Required Skills:</strong> @Html.DisplayFor(modelItem => item.RequiredSkills)</p>
+                    <p class="card-text"><strong>Max Volunteers:</strong> @Html.DisplayFor(modelItem => item.MaxVolunteers)</p>
+                    <p class="card-text"><strong>Coordinator:</strong> @Html.DisplayFor(modelItem => item.User.Email)</p>
+                    <div class="d-flex gap-2">
+                        <a asp-action="Edit" asp-route-id="@item.ProjectID" class="btn btn-outline-primary"><i class="fas fa-edit"></i> Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.ProjectID" class="btn btn-outline-info"><i class="fas fa-info-circle"></i> Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.ProjectID" class="btn btn-outline-danger"><i class="fas fa-trash"></i> Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+    <script>
+        $(document).ready(function () {
+            // Search functionality for project cards
+            $('#projectSearch').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('.project-card').filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>

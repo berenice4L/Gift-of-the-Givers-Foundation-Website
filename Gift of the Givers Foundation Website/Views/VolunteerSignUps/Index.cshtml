@@ -1,0 +1,227 @@
+﻿@model IEnumerable<Gift_of_the_Givers_Foundation_Website.Models.VolunteerSignUp>
+
+@{
+    ViewData["Title"] = "Volunteer Sign-Ups Dashboard";
+}
+
+
+    <style>
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+            /* Header */
+            .dashboard-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .dashboard-container p {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 2rem;
+            }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .stat-card i {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card h3 {
+                font-size: 1.5rem;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card p {
+                font-size: 1rem;
+                color: #666;
+            }
+
+        /* Sign-Ups Grid */
+        .signups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .signup-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .signup-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .signup-card h3 {
+                font-size: 1.25rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .signup-card p {
+                font-size: 0.9rem;
+                color: #666;
+                margin-bottom: 0.5rem;
+            }
+
+            .signup-card i {
+                color: #005B41;
+                margin-right: 0.5rem;
+            }
+
+        .signup-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+            .signup-actions a {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 8px;
+                text-decoration: none;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+                .signup-actions a:hover {
+                    transform: translateY(-2px);
+                }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+            color: #fff;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+                border-color: #c82333;
+            }
+
+        /* Create Button */
+        .create-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+    
+    </style>
+
+
+<div class="dashboard-container">
+    <h1>Volunteer Sign-Ups Dashboard</h1>
+    <p>Manage and monitor volunteer sign-ups</p>
+    <a asp-action="Create" class="btn btn-primary create-button"><i class="fas fa-plus me-2"></i>Create New Sign-Up</a>
+
+    <!-- Statistics Section -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <i class="fas fa-users"></i>
+            <h3>@ViewData["TotalSignUps"]</h3>
+            <p>Total Sign-Ups</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-project-diagram"></i>
+            <h3>@ViewData["UniqueProjects"]</h3>
+            <p>Unique Projects</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-user"></i>
+            <h3>@ViewData["UniqueVolunteers"]</h3>
+            <p>Unique Volunteers</p>
+        </div>
+    </div>
+
+    <!-- Create Button -->
+   
+
+    <!-- Sign-Ups Grid -->
+    <div class="signups-grid">
+        @foreach (var item in Model)
+        {
+            <div class="signup-card">
+                <h3><i class="fas fa-users"></i> Volunteer Sign-Up</h3>
+                <p><i class="fas fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.SignUpDate): @Html.DisplayFor(modelItem => item.SignUpDate)</p>
+                <p><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.User): @Html.DisplayFor(modelItem => item.User.Email)</p>
+                <p><i class="fas fa-project-diagram"></i> @Html.DisplayNameFor(model => model.Project): @Html.DisplayFor(modelItem => item.Project.Title)</p>
+                <div class="signup-actions">
+                    <a asp-action="Edit" asp-route-id="@item.SignUpID" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.SignUpID" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.SignUpID" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Hover effect for cards and buttons
+            $('.signup-card, .stat-card, .signup-actions a').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

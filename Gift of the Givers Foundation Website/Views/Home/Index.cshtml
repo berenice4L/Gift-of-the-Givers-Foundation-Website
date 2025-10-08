@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <section class="hero-section text-center text-white d-flex align-items-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Welcome Back. Lets make today matter.</h1>
+            <p class="lead mb-4">Join Gift of the Givers in providing humanitarian aid and disaster relief worldwide.</p>
+            <a class="btn btn-primary btn-lg me-2" asp-area="" asp-controller="Donations" asp-action="Create">Donate Now</a>
+            <a class="btn btn-outline-light btn-lg" asp-area="" asp-controller="VolunteerSignUps" asp-action="Index">Volunteer</a>
+        </div>
+    </section>
+}
+else
+{
+    <section class="hero-section text-center text-white d-flex align-items-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Making a Difference, One Life at a Time</h1>
+            <p class="lead mb-4">Join Gift of the Givers in providing humanitarian aid and disaster relief worldwide.</p>
+            <a class="btn btn-primary btn-lg me-2" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="btn btn-outline-light btn-lg" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </div>
+    </section>
+}
+

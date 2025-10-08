@@ -1,0 +1,214 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "About Us";
+}
+
+
+    <style>
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(rgba(0, 91, 65, 0.8), rgba(0, 91, 65, 0.8)), url('/images/hero-bg.jpg') no-repeat center center/cover;
+            color: #fff;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+            .about-hero h1 {
+                font-size: 3rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+            }
+
+            .about-hero p {
+                font-size: 1.25rem;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+        }
+
+            .section h2 {
+                font-size: 2.5rem;
+                color: #005B41;
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+            .service-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .service-card i {
+                font-size: 3rem;
+                color: #005B41;
+                margin-bottom: 1rem;
+            }
+
+            .service-card h3 {
+                font-size: 1.5rem;
+                color: #333;
+                margin-bottom: 1rem;
+            }
+
+            .service-card p {
+                color: #666;
+                line-height: 1.6;
+            }
+
+        /* Features List */
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+
+            .features-list li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1rem;
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 8px;
+            }
+
+            .features-list i {
+                color: #005B41;
+                font-size: 1.5rem;
+                margin-right: 1rem;
+            }
+
+            .features-list span {
+                color: #333;
+            }
+
+        /* Call to Action */
+        .cta-section {
+            background: #005B41;
+            color: #fff;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+            .cta-section h2 {
+                color: #fff;
+                margin-bottom: 1rem;
+            }
+
+            .cta-section .btn {
+                background: #fff;
+                color: #005B41;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
+            }
+
+                .cta-section .btn:hover {
+                    background: #f8f9fa;
+                }
+
+    </style>
+
+
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="container">
+        <h1>Gift of the Givers Foundation</h1>
+        <p>Delivering humanitarian aid and disaster relief to those in need worldwide since 1992. We empower communities through innovative projects, volunteer coordination, disaster alerts, and secure donations.</p>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="section bg-light">
+    <div class="container">
+        <h2>Our Mission</h2>
+        <p class="text-center">Gift of the Givers Foundation is a non-profit organization dedicated to providing rapid, effective humanitarian assistance in times of crisis. Founded in 1992, we respond to disasters, support vulnerable communities, and foster sustainable development. Our commitment to transparency, efficiency, and compassion drives everything we do.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="section">
+    <div class="container">
+        <h2>Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-tasks"></i>
+                <h3>Project Management</h3>
+                <p>Manage humanitarian projects from inception to completion, including resource allocation, volunteer coordination, and impact tracking to ensure effective aid delivery.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Disaster Alerts</h3>
+                <p>Monitor and respond to global disasters with real-time alerts, enabling quick mobilization of resources and teams to affected areas.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-users"></i>
+                <h3>Volunteer Coordination</h3>
+                <p>Recruit, manage, and deploy volunteers for projects and relief efforts, ensuring skills match needs and fostering community engagement.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-donate"></i>
+                <h3>Secure Donations</h3>
+                <p>Facilitate safe and transparent donations, track contributions, and allocate funds to high-impact initiatives, maximizing every dollar donated.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- User Features Section -->
+<section class="section bg-light">
+    <div class="container">
+        <h2>What We Offer Users</h2>
+        <ul class="features-list">
+            <li>
+                <i class="fas fa-dashboard"></i>
+                <span>Intuitive Dashboards: Access comprehensive views of projects, alerts, volunteer sign-ups, and donations with real-time stats and easy navigation.</span>
+            </li>
+            <li>
+                <i class="fas fa-edit"></i>
+                <span>CRUD Operations: Create, read, update, and delete records for efficient management of all foundation activities.</span>
+            </li>
+            <li>
+                <i class="fas fa-bell"></i>
+                <span>Real-Time Alerts: Stay informed about disasters and urgent needs with timely notifications and response tools.</span>
+            </li>
+            <li>
+                <i class="fas fa-lock"></i>
+                <span>Secure Data Handling: All user data and transactions are protected with robust security measures to ensure privacy and trust.</span>
+            </li>
+            <li>
+                <i class="fas fa-mobile-alt"></i>
+                <span>Mobile-Responsive Design: Access the platform seamlessly on any device for on-the-go management.</span>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Join Us in Making a Difference</h2>
+        <p>Whether you're a volunteer, donor, or partner, your support helps us deliver life-changing aid. Get involved today.</p>
+        <a href="/Home/Donate" class="btn">Donate Now</a>
+        <a href="/Home/Projects" class="btn ms-3">View Projects</a>
+    </div>
+</section>

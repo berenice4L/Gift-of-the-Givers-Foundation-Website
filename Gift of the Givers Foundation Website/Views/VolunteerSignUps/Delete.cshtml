@@ -1,0 +1,145 @@
+﻿@model Gift_of_the_Givers_Foundation_Website.Models.VolunteerSignUp
+
+@{
+    ViewData["Title"] = "Delete Volunteer Sign-Up";
+}
+
+
+    <style>
+        /* Delete Container */
+        .delete-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .delete-container h1 {
+            font-size: 2rem;
+            color: #005B41;
+            margin-bottom: 0.5rem;
+        }
+
+        .delete-container h3 {
+            font-size: 1.5rem;
+            color: #dc3545; /* Red for warning */
+            margin-bottom: 1rem;
+        }
+
+        .delete-container h4 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Details List */
+        .details-list {
+            display: grid;
+            grid-template-columns: 1fr 2fr; /* Label:Value ratio */
+            gap: 1rem;
+            align-items: start;
+        }
+
+        .details-list dt {
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .details-list dd {
+            color: #664;
+            margin-bottom: 1rem;
+        }
+
+        .details-list i {
+            color: #005B41;
+            font-size: 1.2rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-buttons .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .action-buttons .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+
+        
+    </style>
+
+
+<div class="delete-container">
+    <h1>Delete Volunteer Sign-Up</h1>
+    <h3>Are you sure you want to delete this volunteer sign-up?</h3>
+    <h4>@Model.Project.Title</h4>
+    <hr />
+    <div class="details-list">
+        <dt><i class="fas fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.SignUpDate)</dt>
+        <dd>@Html.DisplayFor(model => model.SignUpDate)</dd>
+
+        <dt><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.User)</dt>
+        <dd>@Html.DisplayFor(model => model.User.Email)</dd>
+
+        <dt><i class="fas fa-project-diagram"></i> @Html.DisplayNameFor(model => model.Project)</dt>
+        <dd>@Html.DisplayFor(model => model.Project.Title)</dd>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SignUpID" />
+        <div class="action-buttons">
+            <input type="submit" value="Delete Sign-Up" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this volunteer sign-up? This action cannot be undone.');" />
+            <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-list me-2"></i>Back to List</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Optional: Add hover effect for buttons
+            $('.action-buttons .btn').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

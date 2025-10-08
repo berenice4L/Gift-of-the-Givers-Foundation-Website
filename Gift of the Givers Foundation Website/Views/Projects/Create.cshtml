@@ -1,0 +1,208 @@
+﻿@model Gift_of_the_Givers_Foundation_Website.Models.Project
+
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+
+    <style>
+        /* Form Container */
+        .create-form-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 800px; /* Wider container for two-column layout */
+            margin: 0 auto;
+        }
+
+            /* Form Header */
+            .create-form-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .create-form-container h4 {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 1.5rem;
+        }
+
+        /* Form Group with Icons */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group.full-width {
+                grid-column: 1 / -1; /* Full width for Description */
+            }
+
+            .form-group i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(30%);
+                margin-right:10px;
+                color: #662;
+                font-size: 1.2rem;
+            }
+
+            .form-group .form-control {
+                padding-left: 2.5rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .form-group .form-control:focus {
+                    border-color: #005B41;
+                    box-shadow: 0 0 8px rgba(0, 91, 65, 0.2);
+                    outline: none;
+                }
+
+            .form-group textarea.form-control {
+                padding-left: 1rem;
+                resize: vertical;
+            }
+
+            .form-group label {
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group .text-danger {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+            }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            grid-column: 1 / -1; /* Full width for buttons */
+        }
+
+            .form-actions .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+
+    </style>
+
+
+<div class="create-form-container">
+    <h1>Create Project</h1>
+    <h4>New Humanitarian Project</h4>
+    <hr />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <i class="fas fa-heading"></i>
+                <input asp-for="Title" class="form-control" placeholder="Enter project title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <i class="fas fa-map-marker-alt"></i>
+                <input asp-for="Location" class="form-control" placeholder="Enter project location" />
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="Description" class="control-label"></label>
+                
+                <textarea asp-for="Description" class="form-control" placeholder="Describe the project" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <i class="fas fa-calendar-alt"></i>
+                <input asp-for="StartDate" class="form-control datepicker" placeholder="Select start date" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <i class="fas fa-calendar-alt"></i>
+                <input asp-for="EndDate" class="form-control datepicker" placeholder="Select end date" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RequiredSkills" class="control-label"></label>
+                <i class="fas fa-tools"></i>
+                <input asp-for="RequiredSkills" class="form-control" placeholder="List required skills" />
+                <span asp-validation-for="RequiredSkills" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MaxVolunteers" class="control-label"></label>
+                <i class="fas fa-users"></i>
+                <input asp-for="MaxVolunteers" class="form-control" type="number" placeholder="Enter max volunteers" />
+                <span asp-validation-for="MaxVolunteers" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Create Project" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <!-- Include jQuery UI for datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Initialize datepicker for StartDate and EndDate
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                minDate: 0 // Prevent selecting past dates
+            });
+        });
+    </script>
+}

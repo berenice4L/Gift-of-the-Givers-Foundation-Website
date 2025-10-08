@@ -1,0 +1,248 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Log In";
+}
+
+
+    <style>
+        /* Login Container */
+        .login-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 900px; /* Slightly wider for two columns */
+            margin: 0 auto;
+        }
+
+            /* Form Header */
+            .login-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .login-container h2 {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 2rem;
+        }
+
+        /* Form Group with Icons */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(30%);
+                color: #664;
+                font-size: 1.2rem;
+            }
+
+            .form-group .form-control {
+                padding-left: 2.5rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                height: 50px; /* Consistent height */
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .form-group .form-control:focus {
+                    border-color: #005B41;
+                    box-shadow: 0 0 8px rgba(0, 91, 65, 0.2);
+                    outline: none;
+                }
+
+            .form-group label {
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 0.5rem;
+                position: static; /* Override form-floating */
+            }
+
+            .form-group .text-danger {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+            }
+
+        /* Checkbox Styling */
+        .form-check {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.5rem;
+        }
+
+        .form-check-label {
+            color: #333;
+        }
+
+        /* External Login Section */
+        .external-login h3 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .external-login .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+            .external-login .btn i {
+                font-size: 1.2rem;
+            }
+
+        /* Links Section */
+        .links-section {
+            margin-top: 1rem;
+        }
+
+            .links-section a {
+                color: #005B41;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .links-section a:hover {
+                    color: #004d33;
+                    text-decoration: underline;
+                }
+
+        /* Form Actions */
+        .form-actions {
+            grid-column: 1 / -1; /* Full width */
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+            .form-actions .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+                width: 100%;
+            }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+
+    </style>
+
+
+<div class="login-container">
+    <h1>@ViewData["Title"]</h1>
+    <div class="form-grid">
+        <div>
+            <h2>Use a Local Account to Log In</h2>
+            <hr />
+            <form id="account" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email">Email</label>
+                    <i class="fas fa-envelope"></i>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">Password</label>
+                    <i class="fas fa-lock"></i>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Enter password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    <label class="form-check-label" asp-for="Input.RememberMe">
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button id="login-submit" type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt me-2"></i>Log In</button>
+                </div>
+                <div class="links-section">
+                    <p><a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a></p>
+                    <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a></p>
+                    <p><a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a></p>
+                </div>
+            </form>
+        </div>
+        <div class="external-login">
+            <h3>Use Another Service to Log In</h3>
+            <hr />
+            @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            {
+                <div>
+                    <p>
+                        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                            article
+                            about setting up this ASP.NET application to support logging in via external services
+                        </a>.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @foreach (var provider in Model.ExternalLogins!)
+                            {
+                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                    <i class="@(provider.Name == "Google" ? "fab fa-google" : provider.Name == "Facebook" ? "fab fa-facebook" : provider.Name == "Twitter" ? "fab fa-twitter" : "fas fa-sign-in-alt")"></i>
+                                    @provider.DisplayName
+                                </button>
+                            }
+                        </p>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            // Hover effect for buttons
+            $('.form-actions .btn, .external-login .btn').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-2px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

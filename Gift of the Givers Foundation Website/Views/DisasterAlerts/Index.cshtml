@@ -1,0 +1,226 @@
+﻿@model IEnumerable<Gift_of_the_Givers_Foundation_Website.Models.DisasterAlert>
+
+@{
+    ViewData["Title"] = "Disaster Alerts Dashboard";
+}
+
+
+    <style>
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+            /* Header */
+            .dashboard-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .dashboard-container p {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 2rem;
+            }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .stat-card i {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card h3 {
+                font-size: 1.5rem;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card p {
+                font-size: 1rem;
+                color: #666;
+            }
+
+        /* Alerts Grid */
+        .alerts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .alert-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .alert-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .alert-card h3 {
+                font-size: 1.25rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .alert-card p {
+                font-size: 0.9rem;
+                color: #666;
+                margin-bottom: 0.5rem;
+            }
+
+            .alert-card i {
+                color: #005B41;
+                margin-right: 0.5rem;
+            }
+
+        .alert-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+            .alert-actions a {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 8px;
+                text-decoration: none;
+                transition: background-color 0.3s ease, transform 0.2s ease;
+            }
+
+                .alert-actions a:hover {
+                    transform: translateY(-2px);
+                }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+            color: #fff;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+                border-color: #c82333;
+            }
+
+        /* Create Button */
+        .create-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+    </style>
+
+
+<div class="dashboard-container">
+    <h1>Disaster Alerts Dashboard</h1>
+    <p>Manage and monitor disaster alerts</p>
+    <a asp-action="Create" class="btn btn-primary create-button"><i class="fas fa-plus me-2"></i>Create New Alert</a>
+    <!-- Statistics Section -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>@ViewData["TotalAlerts"]</h3>
+            <p>Total Alerts</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-clock"></i>
+            <h3>@ViewData["ActiveAlerts"]</h3>
+            <p>Active Alerts</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>@ViewData["UniqueLocations"]</h3>
+            <p>Unique Locations</p>
+        </div>
+    </div>
+
+    <!-- Create Button -->
+    
+
+    <!-- Alerts Grid -->
+    <div class="alerts-grid">
+        @foreach (var item in Model)
+        {
+            <div class="alert-card">
+                <h3><i class="fas fa-exclamation-triangle"></i> @Html.DisplayFor(modelItem => item.Title)</h3>
+                <p><i class="fas fa-align-left"></i> @Html.DisplayFor(modelItem => item.Description)</p>
+                <p><i class="fas fa-map-marker-alt"></i> @Html.DisplayFor(modelItem => item.Location)</p>
+                <p><i class="fas fa-calendar-alt"></i> @Html.DisplayFor(modelItem => item.Date)</p>
+                <p><i class="fas fa-user"></i> @Html.DisplayFor(modelItem => item.User.Email)</p>
+                <div class="alert-actions">
+                    <a asp-action="Edit" asp-route-id="@item.AlertId" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.AlertId" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.AlertId" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Hover effect for cards and buttons
+            $('.alert-card, .stat-card, .alert-actions a').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
+}

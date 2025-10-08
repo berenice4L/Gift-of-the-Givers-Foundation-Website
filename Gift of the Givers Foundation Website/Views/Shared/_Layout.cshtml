@@ -1,0 +1,254 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gift of the Givers Foundation</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+        font-family: 'Poppins', sans-serif;
+        color: #333;
+        line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        }
+
+        /* Navbar */
+        .navbar {
+        padding: 1rem 0;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #005B41 !important;
+        }
+
+        .navbar-brand .logo {
+        height: 40px;
+        width: auto;
+        }
+
+        .nav-link {
+        font-size: 1rem;
+        color: #333 !important;
+        transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+        color: #005B41 !important;
+        }
+
+        .btn-primary {
+        background-color: #005B41;
+        border-color: #005B41;
+        transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+        background-color: #004d33;
+        border-color: #004d33;
+        }
+
+        /* Hero Section */
+        .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.pexels.com/photos/31438843/pexels-photo-31438843.jpeg') no-repeat center center/cover;
+        height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        }
+
+        .hero-section h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section p {
+        font-size: 1.25rem;
+        color: #fff;
+        }
+
+        .hero-section .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+        background-color: #1a1a1a;
+        }
+
+        footer h5 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        }
+
+        footer p, footer a {
+        font-size: 0.9rem;
+        }
+
+        .social-icons i {
+        font-size: 1.5rem;
+        transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover i {
+        color: #005B41;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="https://cdn-icons-png.flaticon.com/128/2770/2770560.png" alt="Gift of the Givers Logo" class="logo me-2" />
+                    <span>Gift of the Givers</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="VolunteerSignUps" asp-action="Index">Volunteer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="DisasterAlerts" asp-action="Index">Alerts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                            </li>
+
+                        </ul>
+
+                        <div class="d-flex">
+
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
+                            </li>
+
+                        </ul>
+
+                        <div class="d-flex">
+
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                }
+                
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->      
+    <main role="main">
+           @RenderBody()
+       </main>
+    
+
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Gift of the Givers</h5>
+                    <p>Delivering humanitarian aid and disaster relief to those in need since 1992.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a asp-action="About" asp-controller="Home" class="text-white text-decoration-none">About Us</a></li>
+                        <li><a asp-action="Index" asp-controller="Projects" class="text-white text-decoration-none">Projects</a></li>
+                        <li><a asp-action="Create" asp-controller="Donations" class="text-white text-decoration-none">Donate</a></li>
+                        <li><a asp-action="Index" asp-controller="VolunteerSignUps" class="text-white text-decoration-none">Volunteer</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <p><i class="fas fa-envelope me-2"></i> info@giftofthegivers.org</p>
+                    <p><i class="fas fa-phone me-2"></i> +27 123 456 789</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <p>&copy; 2025 Gift of the Givers Foundation. <a href="#" class="text-white">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Smooth scrolling for anchor links
+            $('a[href*="#"]').not('[href="#"]').click(function (event) {
+                if (
+                    location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+                    location.hostname == this.hostname
+                ) {
+                    event.preventDefault();
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        $('html, body').animate({
+                            scrollTop: target.offset().top
+                        }, 1000);
+                        return false;
+                    }
+                }
+            });
+
+            // Sticky navbar
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('.navbar').addClass('shadow-sm');
+                } else {
+                    $('.navbar').removeClass('shadow-sm');
+                }
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

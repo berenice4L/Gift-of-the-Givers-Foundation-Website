@@ -1,0 +1,184 @@
+﻿@model Gift_of_the_Givers_Foundation_Website.Models.VolunteerSignUp
+
+@{
+    ViewData["Title"] = "Edit Volunteer Sign-Up";
+}
+
+
+    <style>
+        /* Form Container */
+        .edit-form-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 800px; /* Matches VolunteerSignUp/Create.cshtml */
+            margin: 0 auto;
+        }
+
+            /* Form Header */
+            .edit-form-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .edit-form-container h4 {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 1.5rem;
+        }
+
+        /* Form Group with Icons */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(30%);
+                color: #664;
+                font-size: 1.2rem;
+            }
+
+            .form-group .form-control {
+                padding-left: 2.5rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .form-group .form-control:focus {
+                    border-color: #005B41;
+                    box-shadow: 0 0 8px rgba(0, 91, 65, 0.2);
+                    outline: none;
+                }
+
+            .form-group select.form-control {
+                padding-left: 2.5rem;
+                appearance: none;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23666" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 1rem center;
+                background-size: 12px;
+            }
+
+            .form-group label {
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group .text-danger {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+            }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            grid-column: 1 / -1; /* Full width for buttons */
+        }
+
+            .form-actions .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+        
+        
+        
+    </style>
+
+
+<div class="edit-form-container">
+    <h1>Edit Volunteer Sign-Up</h1>
+    <h4>Update Volunteer Sign-Up</h4>
+    <hr />
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="SignUpID" />
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="UserID" class="control-label"></label>
+                <i class="fas fa-user"></i>
+                <select asp-for="UserID" class="form-control" asp-items="ViewBag.UserID">
+                    <option value="">Select a volunteer</option>
+                </select>
+                <span asp-validation-for="UserID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProjectID" class="control-label"></label>
+                <i class="fas fa-project-diagram"></i>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID">
+                    <option value="">Select a project</option>
+                </select>
+                <span asp-validation-for="ProjectID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SignUpDate" class="control-label"></label>
+                <i class="fas fa-calendar-alt"></i>
+                <input asp-for="SignUpDate" class="form-control datepicker" placeholder="Select sign-up date" />
+                <span asp-validation-for="SignUpDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <!-- Include jQuery UI for datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Initialize datepicker for SignUpDate
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                minDate: 0 // Prevent selecting past dates
+            });
+        });
+    </script>
+}

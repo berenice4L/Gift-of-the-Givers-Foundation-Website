@@ -1,0 +1,191 @@
+﻿@model Gift_of_the_Givers_Foundation_Website.Models.Donation
+
+@{
+    ViewData["Title"] = "Create Donation";
+}
+
+
+    <style>
+        /* Form Container */
+        .create-form-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 800px; /* Matches VolunteerSignUp/Create.cshtml */
+            margin: 0 auto;
+        }
+
+            /* Form Header */
+            .create-form-container h1 {
+                font-size: 2rem;
+                color: #005B41;
+                margin-bottom: 0.5rem;
+            }
+
+            .create-form-container h4 {
+                font-size: 1.25rem;
+                color: #333;
+                margin-bottom: 1.5rem;
+            }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Two equal columns */
+            gap: 1.5rem;
+        }
+
+        /* Form Group with Icons */
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+            .form-group i {
+                position: absolute;
+                left: 15px;
+                top: 50%;
+                transform: translateY(30%);
+                color: #664;
+                font-size: 1.2rem;
+            }
+
+            .form-group .form-control {
+                padding-left: 2.5rem;
+                border-radius: 8px;
+                border: 1px solid #ccc;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+                .form-group .form-control:focus {
+                    border-color: #005B41;
+                    box-shadow: 0 0 8px rgba(0, 91, 65, 0.2);
+                    outline: none;
+                }
+
+            .form-group select.form-control {
+                padding-left: 2.5rem;
+                appearance: none;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23666" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 1rem center;
+                background-size: 12px;
+            }
+
+            .form-group label {
+                font-weight: 500;
+                color: #333;
+                margin-bottom: 0.5rem;
+            }
+
+            .form-group .text-danger {
+                font-size: 0.85rem;
+                margin-top: 0.25rem;
+            }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            grid-column: 1 / -1; /* Full width for buttons */
+        }
+
+            .form-actions .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                border-radius: 8px;
+            }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+        }
+
+            .btn-primary:hover {
+                background-color: #004d33;
+                border-color: #004d33;
+            }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                border-color: #5a6268;
+            }
+
+
+    </style>
+
+
+<div class="create-form-container">
+    <h1>Create Donation</h1>
+    <h4>New Donation</h4>
+    <hr />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="ProjectID" class="control-label"></label>
+                <i class="fas fa-project-diagram"></i>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID">
+                    <option value="">Select a project</option>
+                </select>
+                <span asp-validation-for="ProjectID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <i class="fas fa-money-bill-wave"></i>
+                <input asp-for="Amount" class="form-control" placeholder="Enter amount (e.g., 100.00)" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DonationDate" class="control-label"></label>
+                <i class="fas fa-calendar-alt"></i>
+                <input asp-for="DonationDate" class="form-control datepicker" placeholder="Select donation date" />
+                <span asp-validation-for="DonationDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PaymentStatus" class="control-label"></label>
+                <i class="fas fa-check-circle"></i>
+                <select asp-for="PaymentStatus" class="form-control">
+                    <option value="">Select payment status</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Failed">Failed</option>
+                </select>
+                <span asp-validation-for="PaymentStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Create Donation" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <!-- Include jQuery UI for datepicker -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            // Initialize datepicker for DonationDate
+            $('.datepicker').datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeMonth: true,
+                changeYear: true,
+                minDate: 0 // Prevent selecting past dates
+            });
+        });
+    </script>
+}

@@ -1,0 +1,228 @@
+﻿@model IEnumerable<Gift_of_the_Givers_Foundation_Website.Models.Donation>
+
+@{
+    ViewData["Title"] = "Donations Dashboard";
+}
+
+
+    <style>
+        /* Dashboard Container */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .dashboard-container h1 {
+            font-size: 2rem;
+            color: #005B41;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-container p {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: #005B41;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Donations Grid */
+        .donations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .donation-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .donation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .donation-card h3 {
+            font-size: 1.25rem;
+            color: #005B41;
+            margin-bottom: 0.5rem;
+        }
+
+        .donation-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .donation-card i {
+            color: #005B41;
+            margin-right: 0.5rem;
+        }
+
+        .donation-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .donation-actions a {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .donation-actions a:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background-color: #005B41;
+            border-color: #005B41;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #004d33;
+            border-color: #004d33;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #c82333;
+        }
+
+        /* Create Button */
+        .create-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive Design */
+
+    </style>
+
+
+<div class="dashboard-container">
+    <h1>Donations Dashboard</h1>
+    <p>Manage and monitor donations</p>
+
+    <!-- Statistics Section -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <i class="fas fa-donate"></i>
+            <h3>@ViewData["TotalDonations"]</h3>
+            <p>Total Donations</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <h3>@ViewData["AverageDonation"]</h3>
+            <p>Average Donation</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-hourglass-half"></i>
+            <h3>@ViewData["PendingPayments"]</h3>
+            <p>Pending Payments</p>
+        </div>
+    </div>
+
+    <!-- Create Button -->
+    <a asp-action="Create" class="btn btn-primary create-button"><i class="fas fa-plus me-2"></i>Create New Donation</a>
+
+    <!-- Donations Grid -->
+    <div class="donations-grid">
+        @foreach (var item in Model)
+        {
+            <div class="donation-card">
+                <h3><i class="fas fa-donate"></i> Donation</h3>
+                <p><i class="fas fa-money-bill-wave"></i> @Html.DisplayNameFor(model => model.Amount): @Html.DisplayFor(modelItem => item.Amount)</p>
+                <p><i class="fas fa-calendar-alt"></i> @Html.DisplayNameFor(model => model.DonationDate): @Html.DisplayFor(modelItem => item.DonationDate)</p>
+                <p><i class="fas fa-check-circle"></i> @Html.DisplayNameFor(model => model.PaymentStatus): @Html.DisplayFor(modelItem => item.PaymentStatus)</p>
+                <p><i class="fas fa-user"></i> @Html.DisplayNameFor(model => model.User): @Html.DisplayFor(modelItem => item.User.Email)</p>
+                <p><i class="fas fa-project-diagram"></i> @Html.DisplayNameFor(model => model.Project): @Html.DisplayFor(modelItem => item.Project.Title)</p>
+                <div class="donation-actions">
+                    <a asp-action="Edit" asp-route-id="@item.DonationID" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.DonationID" class="btn btn-secondary"><i class="fas fa-info-circle"></i> Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.DonationID" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+    <script>
+        $(document).ready(function () {
+            // Hover effect for cards and buttons
+            $('.donation-card, .stat-card, .donation-actions a').hover(
+                function () {
+                    $(this).css('transform', 'translateY(-5px)');
+                },
+                function () {
+                    $(this).css('transform', 'translateY(0)');
+                }
+            );
+        });
+    </script>
